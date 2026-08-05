@@ -20,15 +20,14 @@ interface Delstrekning {
 }
 
 const totalVarigheit = (alternativ: Alternativ) => {
-    let minutt = alternativ.strekninger.map(delstrekning => delstrekning.varighet).reduce((a, b) => a + b, 0);
-    minutt = minutt / 60;
+    const minutt = alternativ.strekninger.map(delstrekning => delstrekning.varighet).reduce((a, b) => a + b, 0);
     const timar = Math.floor(minutt / 60);
     return timar + " timar og " + (minutt % 60) +" minutt";
 }
 
 function App() {
-    const [startby, setStartby] = React.useState<string>("Oslo");
-    const [sluttby, setSluttby] = React.useState<string>("Trondheim");
+    const [startby] = React.useState<string>("Oslo");
+    const [sluttby] = React.useState<string>("Trondheim");
     const [reiserute, setReiserute] = React.useState<Reiserute | undefined>(undefined);
     const backend = "";
 
@@ -49,7 +48,7 @@ function App() {
                 <thead>
                 <th>Fra</th>
                 <th>Til</th>
-                <th>Varigheit</th>
+                <th>Varigheit (minutt)</th>
                 <th>Type</th>
                 </thead>
                 <tbody>
