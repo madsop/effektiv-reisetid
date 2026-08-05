@@ -10,7 +10,7 @@ USER quarkus
 WORKDIR /code
 RUN ./gradlew dependencies --no-daemon
 COPY src /code/src
-RUN ./gradlew build -Dquarkus.package.jar.type=native --no-daemon
+RUN ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false --no-daemon
 
 # Create the docker final image
 FROM quay.io/quarkus/quarkus-micro-image:2.0
