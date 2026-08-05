@@ -25,7 +25,7 @@ USER quarkus
 WORKDIR /code
 RUN ./gradlew dependencies --no-daemon
 COPY --chown=quarkus:quarkus src /code/src
-RUN ./gradlew build --debug -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false -Dquarkus.quinoa.package-manager-install=false --no-daemon
+RUN ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false -Dquarkus.quinoa.package-manager-install=false --no-daemon
 
 # Create the docker final image
 FROM quay.io/quarkus/quarkus-micro-image:2.0
