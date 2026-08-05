@@ -70,7 +70,7 @@ function App() {
                         <td>{delstrekning.fra}</td>
                         <td>{delstrekning.til}</td>
                         <td>{formaterVarigheit(delstrekning.varighet)}</td>
-                        <td>{delstrekning.type}</td>
+                        <td>{formaterType(delstrekning.type)}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -109,3 +109,18 @@ function App() {
 export default App;
 
 const byar = ["Oslo", "Trondheim", "Bergen", "Stavanger", "Kristiansand", "Tromsø"]
+
+const formaterType = (type: string) => {
+    switch (type) {
+        case "TOG": return "Tog";
+        case "FLYTOG": return "Flytog";
+        case "SIKKERHEITSKONTROLL": return "Sikkerheitskontroll";
+        case "BUFFER": return "Buffer";
+        case "VENTE_PAA_BOARDING": return "Vente på boarding";
+        case "VENTE_OMBORD": return "Vente ombord";
+        case "FLY": return "Fly";
+        case "GAA": return "Gå";
+        case "VENTE_PAA_TOG": return "Vente på tog";
+        default: return "uforventa type " + type;
+    }
+}
