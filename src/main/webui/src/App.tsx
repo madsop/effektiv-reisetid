@@ -21,8 +21,20 @@ interface Delstrekning {
 
 const totalVarigheit = (alternativ: Alternativ) => {
     const minutt = alternativ.strekninger.map(delstrekning => delstrekning.varighet).reduce((a, b) => a + b, 0);
+    return formaterVarigheit(minutt);
+}
+
+function formaterVarigheit(minutt: number) {
     const timar = Math.floor(minutt / 60);
-    return timar + " timar og " + (minutt % 60) + " minutt";
+    if (timar > 0) {
+        const timetekst = timar + " timar";
+        if ((minutt % 60) > 0) {
+            return timetekst + " og " + (minutt % 60) + " minutt";
+        }
+        return timetekst;
+    } else  {
+        return minutt + " minutt";
+    }
 }
 
 function App() {
@@ -48,7 +60,7 @@ function App() {
                 <tr>
                     <th>Fra</th>
                     <th>Til</th>
-                    <th>Varigheit (minutt)</th>
+                    <th>Varigheit</th>
                     <th>Type</th>
                 </tr>
                 </thead>
@@ -57,7 +69,7 @@ function App() {
                     <tr>
                         <td>{delstrekning.fra}</td>
                         <td>{delstrekning.til}</td>
-                        <td>{delstrekning.varighet}</td>
+                        <td>{formaterVarigheit(delstrekning.varighet)}</td>
                         <td>{delstrekning.type}</td>
                     </tr>
                 ))}
