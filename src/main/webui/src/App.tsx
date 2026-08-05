@@ -63,7 +63,7 @@ function App() {
                 ))}
                 </tbody>
             </table>
-            Total varigheit: {totalVarigheit(alternativ)}
+            <div className={"varigheit"}>Total varigheit: {totalVarigheit(alternativ)}</div>
         </>;
     }
 

@@ -13,6 +13,12 @@
   color: white;
 }
 
+.varigheit {
+  margin-top: 1vh;
+  margin-left: 1vmin;
+  text-align: left;
+}
+
 .reiserute td, .reiserute th {
   padding-left: 5vh;
 }
