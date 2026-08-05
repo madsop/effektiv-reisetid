@@ -22,18 +22,17 @@ interface Delstrekning {
 const totalVarigheit = (alternativ: Alternativ) => {
     const minutt = alternativ.strekninger.map(delstrekning => delstrekning.varighet).reduce((a, b) => a + b, 0);
     const timar = Math.floor(minutt / 60);
-    return timar + " timar og " + (minutt % 60) +" minutt";
+    return timar + " timar og " + (minutt % 60) + " minutt";
 }
 
 function App() {
     const [startby] = React.useState<string>("Oslo");
     const [sluttby] = React.useState<string>("Trondheim");
     const [reiserute, setReiserute] = React.useState<Reiserute | undefined>(undefined);
-    const backend = "";
 
     useEffect(() => {
         axios
-            .get(backend + "/reise?startby=" + startby + "&sluttby=" + sluttby)
+            .get("/reise?startby=" + startby + "&sluttby=" + sluttby)
             .then((data) => {
                 setReiserute(data.data);
             });
@@ -46,10 +45,12 @@ function App() {
             </header>
             <table className={"reiserute"}>
                 <thead>
-                <th>Fra</th>
-                <th>Til</th>
-                <th>Varigheit (minutt)</th>
-                <th>Type</th>
+                <tr>
+                    <th>Fra</th>
+                    <th>Til</th>
+                    <th>Varigheit (minutt)</th>
+                    <th>Type</th>
+                </tr>
                 </thead>
                 <tbody>
                 {alternativ.strekninger.map((delstrekning) => (

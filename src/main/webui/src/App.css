@@ -24,19 +24,18 @@
   color: white;
 }
 
-.reiserute td,th {
+.reiserute td, .reiserute th {
   padding-left: 5vh;
+}
+
+.reiserute tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.reiserute tbody tr:nth-child(even) {
+  background-color: #ffffff;
 }
 
 .App-link {
   color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

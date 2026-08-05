@@ -14,19 +14,16 @@ import java.time.Duration
 
 @Path("/reise")
 class ReiseResource {
+    @Suppress("unused")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     fun finnReise(
         @QueryParam("startby") startby: Plass,
         @QueryParam("sluttby") sluttby: Plass,
-    ): Reiserute {
-        val startflyplass = Plass("OSL")
-        val sluttflyplass = Plass("TRD")
-        return Reiserute(
-            medFly = MedFly(HardkodaData.medFly(startby, sluttby, startflyplass, sluttflyplass)),
-            medTog = MedTog(HardkodaData.medTog(startby, sluttby))
-        )
-    }
+    ): Reiserute = Reiserute(
+        medFly = MedFly(HardkodaData.medFly(startby, sluttby)),
+        medTog = MedTog(HardkodaData.medTog(startby, sluttby))
+    )
 }
 
 data class Reiserute(val medFly: MedFly, val medTog: MedTog)
@@ -53,4 +50,9 @@ value class Plass(val value: String)
 
 enum class Type {
     TOG, FLYTOG, SIKKERHEITSKONTROLL, BUFFER, VENTE_PAA_BOARDING, VENTE_OMBORD, FLY, GAA, VENTE_PAA_TOG
+}
+
+data class Flyplass(val by: Plass, val kode: Flyplasskode) {
+    @JvmInline
+    value class Flyplasskode(val kode: String)
 }
