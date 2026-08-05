@@ -1,6 +1,10 @@
 package no.madsopheim
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.JsonSerializer
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.Produces
@@ -34,8 +38,15 @@ data class Delstrekning(
     @JsonProperty("fra") val fra: Plass,
     @JsonProperty("til") val til: Plass,
     val type: Type,
+    @JsonSerialize(using = DurationMinuttSerializer::class)
     val varighet: Duration
 )
+
+class DurationMinuttSerializer : JsonSerializer<Duration>() {
+    override fun serialize(value: Duration, gen: JsonGenerator, serializers: SerializerProvider) {
+        gen.writeNumber(value.toMinutes())
+    }
+}
 
 @JvmInline
 value class Plass(val value: String)
