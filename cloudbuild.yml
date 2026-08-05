@@ -1,0 +1,25 @@
+steps:
+  # Create docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', 'Dockerfile', '-t', 'gcr.io/$PROJECT_ID/effektiv-reisetid', '.']
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/effektiv-reisetid']
+
+  # Start up a cloud instance
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+          'beta',
+          'run',
+          'deploy',
+          'viatrumf-scraper-bff',
+          '--image', 'gcr.io/$PROJECT_ID/viatrumf-scraper-bff',
+          '--allow-unauthenticated',
+          '--platform=managed',
+          '--region=europe-north2'
+      ]
+options:
+  machineType: N1_HIGHCPU_32
+images: ['gcr.io/$PROJECT_ID/effektiv-reisetid']
