@@ -14,8 +14,8 @@ steps:
           'beta',
           'run',
           'deploy',
-          'viatrumf-scraper-bff',
-          '--image', 'gcr.io/$PROJECT_ID/viatrumf-scraper-bff',
+          'effektiv-reisetid',
+          '--image', 'gcr.io/$PROJECT_ID/effektiv-reisetid',
           '--allow-unauthenticated',
           '--platform=managed',
           '--region=europe-north2'
