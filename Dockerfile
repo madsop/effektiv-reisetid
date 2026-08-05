@@ -20,7 +20,7 @@ RUN mkdir -p /home/quarkus/.npm && chown -R quarkus:quarkus /home/quarkus
 ENV NPM_CONFIG_CACHE=/home/quarkus/.npm
 USER quarkus
 WORKDIR /code
-RUN ./gradlew dependencies --no-daemon
+RUN ./gradlew dependencies --quiet --no-daemon
 COPY --chown=quarkus:quarkus src /code/src
 RUN ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false -Dquarkus.quinoa.package-manager-install=false --no-daemon
 
