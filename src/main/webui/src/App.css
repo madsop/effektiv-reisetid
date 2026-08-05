@@ -34,3 +34,7 @@
 .App-link {
   color: #61dafb;
 }
+
+select {
+  margin: 1vh 1vh 1vh 1vh;
+}

@@ -26,8 +26,8 @@ const totalVarigheit = (alternativ: Alternativ) => {
 }
 
 function App() {
-    const [startby] = React.useState<string>("Oslo");
-    const [sluttby] = React.useState<string>("Trondheim");
+    const [startby, setStartby] = React.useState<string>("Oslo");
+    const [sluttby, setSluttby] = React.useState<string>("Trondheim");
     const [reiserute, setReiserute] = React.useState<Reiserute | undefined>(undefined);
 
     useEffect(() => {
@@ -69,6 +69,21 @@ function App() {
 
     return (
         <div className="App">
+            Velg startby
+            <select defaultValue={"Oslo"}
+                    value={startby}
+                    onChange={(e) => setStartby(e.target.value)}
+            >
+                {byar.map((by => (<option key={by} value={by}>{by}</option>)))}
+            </select>
+            |
+            Velg sluttby
+            <select defaultValue={"Trondheim"}
+                    value={sluttby}
+                    onChange={(e) => setSluttby(e.target.value)}
+            >
+                {byar.map((by => (<option key={by} value={by}>{by}</option>)))}
+            </select>
             {reiserute ?
                 <>
                     {lagReiserute(reiserute.medTog)}
@@ -80,3 +95,5 @@ function App() {
 }
 
 export default App;
+
+const byar = ["Oslo", "Trondheim", "Bergen", "Stavanger", "Kristiansand", "Tromsø"]
