@@ -1,38 +1,82 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import axios from "axios";
+
+interface Reiserute {
+    medTog: Alternativ;
+    medFly: Alternativ;
+}
+
+interface Alternativ {
+    tekst: string;
+    strekninger: Delstrekning[];
+}
+
+interface Delstrekning {
+    fra: string;
+    til: string;
+    type: string;
+    varighet: number;
+}
+
+const totalVarigheit = (alternativ: Alternativ) => {
+    let minutt = alternativ.strekninger.map(delstrekning => delstrekning.varighet).reduce((a, b) => a + b, 0);
+    minutt = minutt / 60;
+    const timar = Math.floor(minutt / 60);
+    return timar + " timar og " + (minutt % 60) +" minutt";
+}
 
 function App() {
     const [startby, setStartby] = React.useState<string>("Oslo");
     const [sluttby, setSluttby] = React.useState<string>("Trondheim");
-    const [loading, setLoading] = useState(true);
+    const [reiserute, setReiserute] = React.useState<Reiserute | undefined>(undefined);
     const backend = "";
-
-    const sort = (a: string, b: string): number => {
-        if (!a) return 1;
-        if (!b) return 1;
-        return a.toLowerCase().localeCompare(b.toLowerCase());
-    };
 
     useEffect(() => {
         axios
             .get(backend + "/reise?startby=" + startby + "&sluttby=" + sluttby)
-            // .then((response) => response.data.sort(sort))
             .then((data) => {
-                setLoading(false);
+                setReiserute(data.data);
             });
     }, [startby, sluttby]);
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Reisemåte</h1>
-        <p>
-          tabell her
-        </p>
-      </header>
-    </div>
-  );
+    function lagReiserute(alternativ: Alternativ) {
+        return <>
+            <header className="App-header">
+                <h1>{alternativ.tekst}</h1>
+            </header>
+            <table className={"reiserute"}>
+                <thead>
+                <th>Fra</th>
+                <th>Til</th>
+                <th>Varigheit</th>
+                <th>Type</th>
+                </thead>
+                <tbody>
+                {alternativ.strekninger.map((delstrekning) => (
+                    <tr>
+                        <td>{delstrekning.fra}</td>
+                        <td>{delstrekning.til}</td>
+                        <td>{delstrekning.varighet}</td>
+                        <td>{delstrekning.type}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            Total varigheit: {totalVarigheit(alternativ)}
+        </>;
+    }
+
+    return (
+        <div className="App">
+            {reiserute ?
+                <>
+                    {lagReiserute(reiserute.medTog)}
+                    {lagReiserute(reiserute.medFly)}
+                </> : <></>
+            }
+        </div>
+    );
 }
 
 export default App;
