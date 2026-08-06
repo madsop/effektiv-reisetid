@@ -107,7 +107,7 @@ function App() {
 
 export default App;
 
-const byar = ["Oslo", "Trondheim", "Bergen", "Stavanger", "Kristiansand", "Tromsø"]
+const byar = ["Oslo", "Trondheim", "Bergen", "Stavanger", "Kristiansand"]
 
 const formaterType = (type: string) => {
     switch (type) {

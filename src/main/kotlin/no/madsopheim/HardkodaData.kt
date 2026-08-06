@@ -2,23 +2,37 @@ package no.madsopheim
 
 import java.time.Duration
 
+enum class By(val plass: Plass, val flyplass: Flyplass) : Destinasjon {
+    Oslo(Plass.Oslo, Flyplass.OSL),
+    Trondheim(Plass.Trondheim, Flyplass.TRD),
+    Bergen(Plass.Bergen, Flyplass.BGO),
+    Stavanger(Plass.Stavanger, Flyplass.SVG),
+    Kristiansand(Plass.Kristiansand, Flyplass.KRS);
+
+    override val namn = plass.namn
+
+    companion object {
+        fun fraPlass(plass: Plass) = entries.firstOrNull { it.plass == plass }
+    }
+}
+
+enum class Flyplass(kode: String) : Destinasjon {
+    OSL("OSL"),
+    TRD("TRD"),
+    BGO("BGO"),
+    SVG("SVG"),
+    KRS("KRS");
+
+    override val namn = kode
+}
+
 object HardkodaData {
-    val byer = mapOf(
-        Plass("Oslo") to Flyplass.Flyplasskode("OSL"),
-        Plass("Trondheim") to Flyplass.Flyplasskode("TRD"),
-        Plass("Bergen") to Flyplass.Flyplasskode("BGO"),
-        Plass("Stavanger") to Flyplass.Flyplasskode("SVG"),
-        Plass("Kristiansand") to Flyplass.Flyplasskode("KRS"),
-        Plass("Tromsø") to Flyplass.Flyplasskode("TOS")
-    )
-
-
     fun medFly(startby: Plass, sluttby: Plass): List<Delstrekning> {
-        val startflyplass = byer[startby]
-            ?.let { Plass(it.kode) }
+        val startflyplass = By.fraPlass(startby)
+            ?.flyplass
             ?: throw IllegalArgumentException("Ukjent startby: $startby")
-        val sluttflyplass = byer[sluttby]
-            ?.let { Plass(it.kode) }
+        val sluttflyplass = By.fraPlass(sluttby)
+            ?.flyplass
             ?: throw IllegalArgumentException("Ukjent sluttby: $sluttby")
         return listOf(
             Delstrekning(

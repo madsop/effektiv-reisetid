@@ -32,8 +32,8 @@ data class MedFly(val strekninger: List<Delstrekning>, val tekst: String = "Med 
 data class MedTog(val strekninger: List<Delstrekning>, val tekst: String = "Med tog")
 
 data class Delstrekning(
-    @JsonProperty("fra") val fra: Plass,
-    @JsonProperty("til") val til: Plass,
+    @JsonProperty("fra") val fra: Destinasjon,
+    @JsonProperty("til") val til: Destinasjon,
     val type: Type,
     @JsonSerialize(using = DurationMinuttSerializer::class)
     val varighet: Duration
@@ -45,14 +45,18 @@ class DurationMinuttSerializer : JsonSerializer<Duration>() {
     }
 }
 
-@JvmInline
-value class Plass(val value: String)
+enum class Plass(override val namn: String) : Destinasjon {
+    Oslo("Oslo"),
+    Trondheim("Trondheim"),
+    Bergen("Bergen"),
+    Stavanger("Stavanger"),
+    Kristiansand("Kristiansand")
+}
 
 enum class Type {
     TOG, FLYTOG, SIKKERHEITSKONTROLL, BUFFER, VENTE_PAA_BOARDING, VENTE_OMBORD, FLY, GAA, VENTE_PAA_TOG
 }
 
-data class Flyplass(val by: Plass, val kode: Flyplasskode) {
-    @JvmInline
-    value class Flyplasskode(val kode: String)
+interface Destinasjon {
+    val namn: String
 }
