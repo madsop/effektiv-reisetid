@@ -44,7 +44,7 @@ function App() {
 
     useEffect(() => {
         axios
-            .get("/reise?startby=" + startby + "&sluttby=" + sluttby)
+            .get("http://localhost:8080/reise?startby=" + startby + "&sluttby=" + sluttby)
             .then((data) => {
                 setReiserute(data.data);
             });
@@ -65,8 +65,8 @@ function App() {
                 </tr>
                 </thead>
                 <tbody>
-                {alternativ.strekninger.map((delstrekning) => (
-                    <tr>
+                {alternativ.strekninger.map((delstrekning, index) => (
+                    <tr key={delstrekning.fra + delstrekning.til + index}>
                         <td>{delstrekning.fra}</td>
                         <td>{delstrekning.til}</td>
                         <td>{formaterVarigheit(delstrekning.varighet)}</td>
@@ -82,7 +82,7 @@ function App() {
     return (
         <div className="App">
             Velg startby
-            <select defaultValue={"Oslo"}
+            <select
                     value={startby}
                     onChange={(e) => setStartby(e.target.value)}
             >
@@ -90,8 +90,7 @@ function App() {
             </select>
             |
             Velg sluttby
-            <select defaultValue={"Trondheim"}
-                    value={sluttby}
+            <select value={sluttby}
                     onChange={(e) => setSluttby(e.target.value)}
             >
                 {byar.map((by => (<option key={by} value={by}>{by}</option>)))}
