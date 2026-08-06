@@ -45,14 +45,6 @@ class DurationMinuttSerializer : JsonSerializer<Duration>() {
     }
 }
 
-enum class Plass(override val namn: String) : Destinasjon {
-    Oslo("Oslo"),
-    Trondheim("Trondheim"),
-    Bergen("Bergen"),
-    Stavanger("Stavanger"),
-    Kristiansand("Kristiansand")
-}
-
 enum class Type {
     TOG, FLYTOG, SIKKERHEITSKONTROLL, BUFFER, VENTE_PAA_BOARDING, VENTE_OMBORD, FLY, GAA, VENTE_PAA_TOG
 }

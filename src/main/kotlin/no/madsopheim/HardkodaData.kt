@@ -2,6 +2,14 @@ package no.madsopheim
 
 import java.time.Duration
 
+enum class Plass(override val namn: String) : Destinasjon {
+    Oslo("Oslo"),
+    Trondheim("Trondheim"),
+    Bergen("Bergen"),
+    Stavanger("Stavanger"),
+    Kristiansand("Kristiansand")
+}
+
 enum class By(val plass: Plass, val flyplass: Flyplass) : Destinasjon {
     Oslo(Plass.Oslo, Flyplass.OSL),
     Trondheim(Plass.Trondheim, Flyplass.TRD),
@@ -24,6 +32,46 @@ enum class Flyplass(kode: String) : Destinasjon {
     KRS("KRS");
 
     override val namn = kode
+
+    fun flyavstandTil(flyplass: Flyplass): Duration {
+        if (this == flyplass) return Duration.ZERO
+        return avstander[this]!![flyplass]!!
+    }
+
+    companion object {
+        val avstander = mapOf(
+            OSL to mapOf(
+                TRD to Duration.ofHours(1),
+                BGO to Duration.ofHours(1),
+                SVG to Duration.ofMinutes(45),
+                KRS to Duration.ofMinutes(30)
+            ),
+            TRD to mapOf(
+                OSL to Duration.ofHours(1),
+                BGO to Duration.ofMinutes(80),
+                SVG to Duration.ofMinutes(90),
+                KRS to Duration.ofMinutes(90)
+            ),
+            BGO to mapOf(
+                OSL to Duration.ofHours(1),
+                TRD to Duration.ofMinutes(80),
+                SVG to Duration.ofMinutes(30),
+                KRS to Duration.ofMinutes(30)
+            ),
+            SVG to mapOf(
+                OSL to Duration.ofMinutes(45),
+                BGO to Duration.ofMinutes(30),
+                TRD to Duration.ofMinutes(90),
+                KRS to Duration.ofMinutes(20)
+            ),
+            KRS to mapOf(
+                OSL to Duration.ofMinutes(30),
+                TRD to Duration.ofMinutes(90),
+                BGO to Duration.ofMinutes(30),
+                SVG to Duration.ofMinutes(20),
+            )
+        )
+    }
 }
 
 object HardkodaData {
@@ -63,7 +111,7 @@ object HardkodaData {
                 fra = startflyplass,
                 til = sluttflyplass,
                 type = Type.FLY,
-                varighet = Duration.ofHours(1)
+                varighet = startflyplass.flyavstandTil(sluttflyplass)
             ),
             Delstrekning(
                 fra = sluttflyplass,
