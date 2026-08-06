@@ -44,7 +44,7 @@ function App() {
 
     useEffect(() => {
         axios
-            .get("http://localhost:8080/reise?startby=" + startby + "&sluttby=" + sluttby)
+            .get("/reise?startby=" + startby + "&sluttby=" + sluttby)
             .then((data) => {
                 setReiserute(data.data);
             });
