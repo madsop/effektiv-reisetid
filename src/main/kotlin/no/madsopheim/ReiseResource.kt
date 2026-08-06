@@ -46,7 +46,8 @@ class DurationMinuttSerializer : JsonSerializer<Duration>() {
 }
 
 enum class Type {
-    TOG, FLYTOG, SIKKERHEITSKONTROLL, BUFFER, VENTE_PAA_BOARDING, VENTE_OMBORD, FLY, GAA, VENTE_PAA_TOG
+    TOG, SIKKERHEITSKONTROLL, BUFFER, VENTE_PAA_BOARDING, VENTE_OMBORD, FLY, GAA, VENTE_PAA_TOG,
+    BUSS, BYBANE, FLYTOG,
 }
 
 interface Destinasjon {

@@ -112,7 +112,6 @@ const byar = ["Oslo", "Trondheim", "Bergen", "Stavanger", "Kristiansand"]
 const formaterType = (type: string) => {
     switch (type) {
         case "TOG": return "Tog";
-        case "FLYTOG": return "Flytog";
         case "SIKKERHEITSKONTROLL": return "Sikkerheitskontroll";
         case "BUFFER": return "Buffer";
         case "VENTE_PAA_BOARDING": return "Vente på boarding";
@@ -120,6 +119,8 @@ const formaterType = (type: string) => {
         case "FLY": return "Fly";
         case "GAA": return "Gå";
         case "VENTE_PAA_TOG": return "Vente på tog";
+        case "BUSS": return "Buss";
+        case "BYBANE": return "Bybane";
         default: return "uforventa type " + type;
     }
 }
